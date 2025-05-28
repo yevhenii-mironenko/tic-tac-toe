@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import { useNavigation } from "./features/navigation/hooks/use-navigation";
 import { Game } from "./views/game/game";
 import { Home } from "./views/home/home";
