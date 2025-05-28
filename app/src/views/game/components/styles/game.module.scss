@@ -13,6 +13,10 @@
   }
 }
 
+.boardStatus {
+  margin-bottom: 10px;
+}
+
 .boardRow {
   width: 100%;
   display: flex;
@@ -23,6 +27,8 @@
     background: transparent;
     padding: 0;
     border: none;
+    position: relative;
+    color: #1a1a1a;
     &:hover {
       background-color: #f0f0f0;
     }
@@ -36,6 +42,13 @@
       display: block;
       width: 100%;
       padding-top: 100%;
+    }
+    & span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
     }
   }
   &:first-child {

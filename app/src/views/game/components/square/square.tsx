@@ -1,12 +1,12 @@
 type Props = {
   onSquareClick: () => void;
-  value: number | null;
+  value: string | null;
 };
 
 export function Square({ onSquareClick, value }: Props) {
   return (
-    <button className="square" onClick={onSquareClick}>
-      {/* {value} */}
+    <button onClick={onSquareClick}>
+      <span>{value}</span>
     </button>
   );
 }

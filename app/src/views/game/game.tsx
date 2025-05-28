@@ -1,4 +1,5 @@
 import { Board } from "./components/board/board";
+import { useGame } from "./components/hooks/use-game";
 import style from "./components/styles/game.module.scss";
 
 type Props = {
@@ -7,11 +8,21 @@ type Props = {
 };
 
 export function Game({ gameMode, onRestart }: Props) {
+  const { models, operations } = useGame();
+
   return (
     <div className={style.gameContainer}>
-      <h1>Гра</h1>
-      {gameMode === "vsAI" ? <p>Гра з AI</p> : <p>Гра з другом</p>}
-      <Board />
+      <h1>{gameMode === "vsAI" ? "Гра з AI" : "Гра з другом"}</h1>
+      <div className="game">
+        <div className="game-board">
+          <Board
+            xIsNext={models.xIsNext}
+            squares={models.currentSquares}
+            onPlay={operations.handlePlay}
+            onCalculateWinner={operations.calculateWinner}
+          />
+        </div>
+      </div>
       <button onClick={onRestart}>На головну</button>
     </div>
   );
