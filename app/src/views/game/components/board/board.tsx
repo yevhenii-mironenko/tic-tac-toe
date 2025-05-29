@@ -2,12 +2,13 @@ import { Square } from "../square/square";
 import { useBoard } from "./hooks/use-board";
 import style from "../styles/game.module.scss";
 
-type BoardType = (string | null)[];
+type SquareValue = "X" | "O" | null;
+type BoardType = SquareValue[];
 
 type Props = {
   xIsNext: boolean;
   squares: BoardType;
-  onPlay: (squares: BoardType) => void;
+  onPlay: (nextSquares: BoardType) => void;
   winner: string | null;
   winningLine: number[];
   isDraw: boolean;

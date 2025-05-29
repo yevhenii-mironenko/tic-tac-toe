@@ -33,9 +33,11 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 h1 {
@@ -89,7 +91,33 @@ h1 {
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+  }
+
+  a {
+    color: #8fa8ff;
+  }
+
+  a:hover {
+    color: #b0bfff;
+  }
+
   button {
-    background-color: #f9f9f95e;
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: 1px solid #555;
+  }
+
+  button:hover {
+    background-color: rgb(145, 161, 167);
+    color: #ffffff;
+    border-color: rgb(145, 161, 167);
+  }
+
+  button:focus,
+  button:focus-visible {
+    outline: 3px solid rgb(145, 161, 167);
   }
 }

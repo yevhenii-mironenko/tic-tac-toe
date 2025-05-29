@@ -1,5 +1,5 @@
 type Props = {
-  onStartGame: (mode: "vsAI" | "vsFriend") => void;
+  onStartGame: (mode: "vsFriend" | "vsWeakAI" | "vsStrongAI") => void;
 };
 
 export function Home({ onStartGame }: Props) {
@@ -8,8 +8,13 @@ export function Home({ onStartGame }: Props) {
       <h1>Хрестики-нулики</h1>
       <p>Оберіть, з ким хочете грати</p>
       <div>
-        <button onClick={() => onStartGame("vsAI")}>Грати з AI</button>
         <button onClick={() => onStartGame("vsFriend")}>Грати з другом</button>
+        <button onClick={() => onStartGame("vsWeakAI")}>
+          Грати зі слабким ШІ
+        </button>
+        <button onClick={() => onStartGame("vsStrongAI")}>
+          Грати з сильним ШІ
+        </button>
       </div>
     </div>
   );

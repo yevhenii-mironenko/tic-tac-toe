@@ -3,16 +3,20 @@ import { useGame } from "./components/hooks/use-game";
 import style from "./components/styles/game.module.scss";
 
 type Props = {
-  gameMode: "vsAI" | "vsFriend";
-  onRestart: () => void;
+  gameMode: "vsFriend" | "vsWeakAI" | "vsStrongAI";
+  onGoHome: () => void;
 };
 
-export function Game({ gameMode, onRestart }: Props) {
+export function Game({ gameMode, onGoHome }: Props) {
   const { models, operations } = useGame(gameMode);
 
   return (
     <div className={style.gameContainer}>
-      <h1>{gameMode === "vsAI" ? "Гра з AI" : "Гра з другом"}</h1>
+      <h1>
+        {gameMode === "vsFriend" && "Гра з другом"}
+        {gameMode === "vsWeakAI" && "Гра з слабким ШІ"}
+        {gameMode === "vsStrongAI" && "Гра з сильним ШІ"}
+      </h1>
       <div className="game">
         <div className="game-board">
           <Board
@@ -25,7 +29,8 @@ export function Game({ gameMode, onRestart }: Props) {
           />
         </div>
       </div>
-      <button onClick={onRestart}>На головну</button>
+      <button onClick={onGoHome}>На головну</button>
+      <button onClick={operations.handleRestartGame}>Рестарт</button>
     </div>
   );
 }

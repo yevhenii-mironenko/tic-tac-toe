@@ -11,10 +11,8 @@ export function App() {
       return <Home onStartGame={operations.handleStartGame} />;
     case "game":
       return models.gameMode ? (
-        <Game gameMode={models.gameMode} onRestart={operations.handleRestart} />
+        <Game gameMode={models.gameMode} onGoHome={operations.handleGoHome} />
       ) : null;
-    case "results":
-      return <div>Results</div>;
     default:
       return <Home onStartGame={operations.handleStartGame} />;
   }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-type Step = "home" | "game" | "results";
-type GameMode = "vsAI" | "vsFriend" | null;
+type Step = "home" | "game";
+type GameMode = "vsFriend" | "vsWeakAI" | "vsStrongAI" | null;
 
 export function useNavigation() {
   const [step, setStep] = useState<Step>("home");
@@ -9,14 +9,14 @@ export function useNavigation() {
 
   const handleStartGame = (mode: Exclude<GameMode, null>) => {
     setGameMode(mode);
-    setStep("game");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setStep("game");
+      });
+    });
   };
 
-  const goToResults = () => {
-    setStep("results");
-  };
-
-  const handleRestart = () => {
+  const handleGoHome = () => {
     setGameMode(null);
     setStep("home");
   };
@@ -27,9 +27,8 @@ export function useNavigation() {
       gameMode,
     },
     operations: {
-      goToResults,
       handleStartGame,
-      handleRestart,
+      handleGoHome,
     },
   };
 }

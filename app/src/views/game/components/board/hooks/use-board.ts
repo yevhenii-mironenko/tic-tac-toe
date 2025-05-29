@@ -1,9 +1,10 @@
-type BoardType = (string | null)[];
+type SquareValue = "X" | "O" | null;
+type BoardType = SquareValue[];
 
 type Props = {
   xIsNext: boolean;
   squares: BoardType;
-  onPlay: (squares: BoardType) => void;
+  onPlay: (nextSquares: BoardType) => void;
   winner: string | null;
   isDraw: boolean;
 };
