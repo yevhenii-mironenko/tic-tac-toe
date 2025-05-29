@@ -36,6 +36,12 @@
       @media (prefers-color-scheme: dark) {
         background-color: #f9f9f929;
       }
+      @media only screen and (max-width: 600px) {
+        background-color: transparent;
+        @media (prefers-color-scheme: dark) {
+          background-color: transparent;
+        }
+      }
     }
 
     &:focus,
