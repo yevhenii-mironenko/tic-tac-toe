@@ -9,11 +9,9 @@ export function useNavigation() {
 
   const handleStartGame = (mode: Exclude<GameMode, null>) => {
     setGameMode(mode);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setStep("game");
-      });
-    });
+    setTimeout(() => {
+      setStep("game");
+    }, 100);
   };
 
   const handleGoHome = () => {
