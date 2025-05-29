@@ -11,7 +11,7 @@ export function useNavigation() {
     setGameMode(mode);
     setTimeout(() => {
       setStep("game");
-    }, 250);
+    }, 150);
   };
 
   const handleGoHome = () => {

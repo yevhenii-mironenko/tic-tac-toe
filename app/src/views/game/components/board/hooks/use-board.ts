@@ -7,11 +7,22 @@ type Props = {
   onPlay: (nextSquares: BoardType) => void;
   winner: string | null;
   isDraw: boolean;
+  gameMode: "vsFriend" | "vsWeakAI" | "vsStrongAI";
 };
 
-export function useBoard({ xIsNext, squares, onPlay, winner, isDraw }: Props) {
+export function useBoard({
+  xIsNext,
+  squares,
+  onPlay,
+  winner,
+  isDraw,
+  gameMode,
+}: Props) {
   function handleClick(i: number) {
-    if (squares[i] || winner) return;
+    const isAIturn =
+      !xIsNext && (gameMode === "vsWeakAI" || gameMode === "vsStrongAI");
+    if (squares[i] || winner || isAIturn) return;
+
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext ? "X" : "O";
     onPlay(nextSquares);

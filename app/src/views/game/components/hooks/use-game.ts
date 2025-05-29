@@ -37,7 +37,7 @@ export function useGame(gameMode: GameMode) {
         const bestMove =
           gameMode === "vsStrongAI"
             ? findBestMove(currentSquares)
-            : getRandomMove(currentSquares);
+            : getWeakAIMove(currentSquares);
 
         if (bestMove !== null) {
           next[bestMove] = "O";
@@ -77,10 +77,29 @@ export function useGame(gameMode: GameMode) {
     return squares.every(Boolean) && !calculateWinner(squares);
   }
 
-  function getRandomMove(squares: BoardState): number | null {
+  function getWeakAIMove(squares: BoardState): number | null {
     const emptyIndexes = squares
       .map((val, idx) => (val === null ? idx : null))
       .filter((v): v is number => v !== null);
+
+    for (const idx of emptyIndexes) {
+      squares[idx] = "O";
+      if (calculateWinner(squares)?.winner === "O") {
+        squares[idx] = null;
+        return idx;
+      }
+      squares[idx] = null;
+    }
+
+    for (const idx of emptyIndexes) {
+      squares[idx] = "X";
+      if (calculateWinner(squares)?.winner === "X") {
+        squares[idx] = null;
+        return idx;
+      }
+      squares[idx] = null;
+    }
+
     if (emptyIndexes.length === 0) return null;
     return emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
   }

@@ -40,11 +40,8 @@
 
     &:focus,
     &:active {
-      background-color: hsla(0, 0%, 94%, 0.607);
+      background-color: transparent;
       outline: none;
-      @media (prefers-color-scheme: dark) {
-        background-color: hsla(0, 0%, 94%, 0.478);
-      }
     }
 
     &:before {

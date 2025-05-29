@@ -26,6 +26,7 @@ export function Game({ gameMode, onGoHome }: Props) {
             winner={models.winner}
             winningLine={models.winningLine}
             isDraw={models.isDraw}
+            gameMode={gameMode}
           />
         </div>
       </div>

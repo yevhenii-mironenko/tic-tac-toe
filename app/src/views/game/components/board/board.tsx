@@ -12,6 +12,7 @@ type Props = {
   winner: string | null;
   winningLine: number[];
   isDraw: boolean;
+  gameMode: "vsFriend" | "vsWeakAI" | "vsStrongAI";
 };
 
 export function Board({
@@ -21,6 +22,7 @@ export function Board({
   winner,
   winningLine,
   isDraw,
+  gameMode,
 }: Props) {
   const { models, operations } = useBoard({
     xIsNext,
@@ -28,6 +30,7 @@ export function Board({
     onPlay,
     winner,
     isDraw,
+    gameMode,
   });
 
   function renderSquare(i: number) {
