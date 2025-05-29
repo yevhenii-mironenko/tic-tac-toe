@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SquareValue = string | null;
 type BoardState = SquareValue[];
 type HistoryState = BoardState[];
 
-export function useGame() {
+export function useGame(gameMode: "vsAI" | "vsFriend") {
   const [history, setHistory] = useState<HistoryState>([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState<number>(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+
+  const winnerInfo = calculateWinner(currentSquares);
+  const draw = isDraw(currentSquares);
+  const winner = winnerInfo?.winner ?? null;
+
+  useEffect(() => {
+    if (gameMode !== "vsAI" || xIsNext || winner || draw) return;
+
+    const timeout = setTimeout(() => {
+      const bestMove = findBestMove(currentSquares);
+      if (bestMove !== -1) {
+        const nextSquares = currentSquares.slice();
+        nextSquares[bestMove] = "O";
+        handlePlay(nextSquares);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [xIsNext, gameMode, currentSquares, winner, draw]);
 
   function handlePlay(nextSquares: BoardState) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -46,20 +65,74 @@ export function useGame() {
     return squares.every(Boolean) && !calculateWinner(squares);
   }
 
-  const winnerInfo = calculateWinner(currentSquares);
-  const draw = isDraw(currentSquares);
+  function findBestMove(squares: BoardState): number {
+    let bestScore = -Infinity;
+    let move = -1;
+    for (let i = 0; i < squares.length; i++) {
+      if (!squares[i]) {
+        squares[i] = "O";
+        const score = minimax(squares, 0, false, -Infinity, Infinity);
+        squares[i] = null;
+        if (score > bestScore) {
+          bestScore = score;
+          move = i;
+        }
+      }
+    }
+    return move;
+  }
+
+  function minimax(
+    squares: BoardState,
+    depth: number,
+    isMaximizing: boolean,
+    alpha: number,
+    beta: number
+  ): number {
+    const result = calculateWinner(squares);
+    if (result?.winner === "O") return 10 - depth;
+    if (result?.winner === "X") return depth - 10;
+    if (isDraw(squares)) return 0;
+
+    if (isMaximizing) {
+      let maxEval = -Infinity;
+      for (let i = 0; i < squares.length; i++) {
+        if (!squares[i]) {
+          squares[i] = "O";
+          const evalScore = minimax(squares, depth + 1, false, alpha, beta);
+          squares[i] = null;
+          maxEval = Math.max(maxEval, evalScore);
+          alpha = Math.max(alpha, evalScore);
+          if (beta <= alpha) break;
+        }
+      }
+      return maxEval;
+    } else {
+      let minEval = Infinity;
+      for (let i = 0; i < squares.length; i++) {
+        if (!squares[i]) {
+          squares[i] = "X";
+          const evalScore = minimax(squares, depth + 1, true, alpha, beta);
+          squares[i] = null;
+          minEval = Math.min(minEval, evalScore);
+          beta = Math.min(beta, evalScore);
+          if (beta <= alpha) break;
+        }
+      }
+      return minEval;
+    }
+  }
 
   return {
     models: {
       xIsNext,
       currentSquares,
-      winner: winnerInfo?.winner ?? null,
+      winner,
       winningLine: winnerInfo?.line ?? [],
       isDraw: draw,
     },
     operations: {
       handlePlay,
-      calculateWinner,
     },
   };
 }

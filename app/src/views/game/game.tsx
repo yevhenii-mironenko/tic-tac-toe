@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function Game({ gameMode, onRestart }: Props) {
-  const { models, operations } = useGame();
+  const { models, operations } = useGame(gameMode);
 
   return (
     <div className={style.gameContainer}>
