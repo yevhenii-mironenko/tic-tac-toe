@@ -1,39 +1,26 @@
-type BoartType = (string | null)[];
+type BoardType = (string | null)[];
 
 type Props = {
   xIsNext: boolean;
-  squares: BoartType;
-  onPlay: (squares: BoartType) => void;
-  onCalculateWinner: (squares: BoartType) => string | null;
+  squares: BoardType;
+  onPlay: (squares: BoardType) => void;
+  winner: string | null;
+  isDraw: boolean;
 };
 
-export function useBoard({
-  xIsNext,
-  squares,
-  onPlay,
-  onCalculateWinner,
-}: Props) {
+export function useBoard({ xIsNext, squares, onPlay, winner, isDraw }: Props) {
   function handleClick(i: number) {
-    if (onCalculateWinner(squares) || squares[i]) {
-      return;
-    }
+    if (squares[i] || winner) return;
     const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = "X";
-    } else {
-      nextSquares[i] = "O";
-    }
+    nextSquares[i] = xIsNext ? "X" : "O";
     onPlay(nextSquares);
   }
 
-  const winner = onCalculateWinner(squares);
-
-  let status;
-  if (winner) {
-    status = "Переможець: " + winner;
-  } else {
-    status = "Наступний гравець: " + (xIsNext ? "X" : "O");
-  }
+  const status = winner
+    ? `Переможець: ${winner}`
+    : isDraw
+    ? "Нічия!"
+    : `Наступний хід: ${xIsNext ? "X" : "O"}`;
 
   return {
     models: {

@@ -1,7 +1,8 @@
 .boardContainer {
   width: 100%;
   max-width: 40%;
-  margin: 0 auto 10px auto;
+  margin: 0 auto 10px;
+
   @media (max-width: 992px) {
     max-width: 45%;
   }
@@ -20,6 +21,7 @@
 .boardRow {
   width: 100%;
   display: flex;
+
   button {
     width: 100%;
     margin: 0;
@@ -28,58 +30,76 @@
     padding: 0;
     border: none;
     position: relative;
-    color: #1a1a1a;
+
     &:hover {
       background-color: #f0f0f0;
+      @media (prefers-color-scheme: dark) {
+        background-color: #f9f9f929;
+      }
     }
+
     &:focus,
     &:active {
       background-color: hsla(0, 0%, 94%, 0.607);
       outline: none;
+      @media (prefers-color-scheme: dark) {
+        background-color: hsla(0, 0%, 94%, 0.478);
+      }
     }
+
     &:before {
       content: "";
       display: block;
       width: 100%;
       padding-top: 100%;
     }
-    & span {
+
+    span {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      font-size: 2rem;
+      font-size: 5rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      border-color: #f9f9f95e !important;
+    }
+
+    &.buttonX span {
+      color: lightblue;
+    }
+
+    &.buttonY span {
+      color: lightcoral;
+    }
+
+    &.buttonX.highlight {
+      background-color: lightcyan;
+    }
+
+    &.buttonY.highlight {
+      background-color: lightpink;
     }
   }
-  &:first-child {
-    button {
-      border-bottom: 5px solid #1a1a1a;
-    }
+
+  &:first-child button {
+    border-bottom: 5px solid #1a1a1a;
   }
-  &:last-child {
-    button {
-      border-top: 5px solid #1a1a1a;
-    }
+
+  &:last-child button {
+    border-top: 5px solid #1a1a1a;
   }
-  &:first-child,
-  &:last-child {
-    button {
-      &:first-child {
-        border-right: 5px solid #1a1a1a;
-      }
-      &:last-child {
-        border-left: 5px solid #1a1a1a;
-      }
-    }
+
+  &:first-child button:first-child,
+  &:nth-child(2) button:first-child,
+  &:last-child button:first-child {
+    border-right: 5px solid #1a1a1a;
   }
-  &:nth-child(2) {
-    button {
-      &:first-child {
-        border-right: 5px solid #1a1a1a;
-      }
-      &:last-child {
-        border-left: 5px solid #1a1a1a;
-      }
-    }
+
+  &:first-child button:last-child,
+  &:nth-child(2) button:last-child,
+  &:last-child button:last-child {
+    border-left: 5px solid #1a1a1a;
   }
 }

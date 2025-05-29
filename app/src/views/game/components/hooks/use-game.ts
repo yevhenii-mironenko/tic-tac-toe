@@ -16,7 +16,9 @@ export function useGame() {
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function calculateWinner(squares: BoardState) {
+  function calculateWinner(
+    squares: BoardState
+  ): { winner: string; line: number[] } | null {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -34,16 +36,26 @@ export function useGame() {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        return squares[a];
+        return { winner: squares[a], line: [a, b, c] };
       }
     }
     return null;
   }
 
+  function isDraw(squares: BoardState): boolean {
+    return squares.every(Boolean) && !calculateWinner(squares);
+  }
+
+  const winnerInfo = calculateWinner(currentSquares);
+  const draw = isDraw(currentSquares);
+
   return {
     models: {
       xIsNext,
       currentSquares,
+      winner: winnerInfo?.winner ?? null,
+      winningLine: winnerInfo?.line ?? [],
+      isDraw: draw,
     },
     operations: {
       handlePlay,

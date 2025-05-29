@@ -19,7 +19,9 @@ export function Game({ gameMode, onRestart }: Props) {
             xIsNext={models.xIsNext}
             squares={models.currentSquares}
             onPlay={operations.handlePlay}
-            onCalculateWinner={operations.calculateWinner}
+            winner={models.winner}
+            winningLine={models.winningLine}
+            isDraw={models.isDraw}
           />
         </div>
       </div>
