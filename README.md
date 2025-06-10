@@ -55,7 +55,7 @@ src/
 * `npm run dev` — запуск у режимі розробки.
 * `npm run build` — збірка для продакшну у папку `dist`.
 * `npm run deploy` — збірка для продакшну у папку `dist` і деплой на власний github pages
-  (для цьго змінти `homepage` в `app\package.json`
+  (читати `https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3`)
 
 ## 🛠 Використані технології
 
